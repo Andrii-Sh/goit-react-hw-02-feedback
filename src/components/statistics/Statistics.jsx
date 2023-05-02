@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
+import { Notification } from '../notification/Notification';
 
 export const Statistics = ({ good, neutral, bad, total, positivePercentage }) =>
   total === 0 ? (
-    <p>There is no feedback</p>
+    <Notification message="There is no feedback"> </Notification>
   ) : (
     <ul>
       <li>Good: {good}</li>
