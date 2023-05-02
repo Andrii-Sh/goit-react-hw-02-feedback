@@ -2,6 +2,13 @@
 import React, { Component } from 'react';
 import { Statistics } from '../components/statistics/Statistics';
 import { FeedbackOptions } from '../components/feedback-options/FeedbackOptions';
+import { Section } from '../components/section/Section';
+
+const options = [
+  { id: 'id-1', name: 'good' },
+  { id: 'id-2', name: 'neutral' },
+  { id: 'id-3', name: 'bad' },
+];
 
 export class App extends Component {
   state = {
@@ -10,37 +17,23 @@ export class App extends Component {
     bad: 0,
   };
 
-  // onLeaveFeedback = option => {
-  //   this.setState(prevState => {
-  //     switch (option) {
-  //       case 'good':
-  //         return { good: prevState.good + 1 };
-  //         break;
+  onLeaveFeedback = option => {
+    switch (option) {
+      case 'good':
+        this.setState(prevState => ({ good: prevState.good + 1 }));
+        break;
 
-  //       case 'neutral':
-  //         return { neutral: prevState.neutral + 1 };
-  //         break;
+      case 'neutral':
+        this.setState(prevState => ({ neutral: prevState.neutral + 1 }));
+        break;
 
-  //       case 'bad':
-  //         return { neutral: prevState.neutral + 1 };
-  //         break;
+      case 'bad':
+        this.setState(prevState => ({ bad: prevState.bad + 1 }));
+        break;
 
-  //       default:
-  //         break;
-  //     }
-  //   });
-  // };
-
-  handleClickOnGood = () => {
-    this.setState(prevState => ({ good: prevState.good + 1 }));
-  };
-
-  handleClickOnNeutral = () => {
-    this.setState(prevState => ({ neutral: prevState.neutral + 1 }));
-  };
-
-  handleClickOnBad = () => {
-    this.setState(prevState => ({ bad: prevState.bad + 1 }));
+      default:
+        break;
+    }
   };
 
   countTotalFeedback = () =>
@@ -56,12 +49,6 @@ export class App extends Component {
 
   render() {
     const { good, neutral, bad } = this.state;
-    const options = ['good', 'neutral', 'bad'];
-    // const onLeaveFeedback = ([
-    //   this.handleClickOnGood,
-    //   this.handleClickOnNeutral,
-    //   this.handleClickOnBad,
-    // ] = this);
 
     return (
       <div
@@ -75,37 +62,22 @@ export class App extends Component {
           color: '#010101',
         }}
       >
-        <FeedbackOptions
-          options={options}
-          // onLeaveFeedback={onLeaveFeedback}
-        ></FeedbackOptions>
-        <Statistics
-          good={good}
-          neutral={neutral}
-          bad={bad}
-          total={this.countTotalFeedback()}
-          positivePercentage={this.countPositiveFeedbackPercentage()}
-        />
+        <Section title="Please leave feadback">
+          <FeedbackOptions
+            options={options}
+            onLeaveFeedback={this.onLeaveFeedback}
+          ></FeedbackOptions>
+        </Section>
+        <Section title="Statistics">
+          <Statistics
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            total={this.countTotalFeedback()}
+            positivePercentage={this.countPositiveFeedbackPercentage()}
+          />
+        </Section>
       </div>
     );
   }
 }
-
-// export default App;
-
-// export const App = () => {
-//   return (
-//     <div
-//       style={{
-//         height: '100vh',
-//         display: 'flex',
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//         fontSize: 40,
-//         color: '#010101',
-//       }}
-//     >
-//       <Feedback />
-//     </div>
-//   );
-// };
